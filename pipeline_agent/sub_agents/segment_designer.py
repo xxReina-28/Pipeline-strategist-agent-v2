@@ -1,63 +1,96 @@
+from __future__ import annotations
 
+from dataclasses import dataclass
+from typing import Tuple
+
+import numpy as np
 import pandas as pd
 
 
+@dataclass
+class SegmentDesignerConfig:
+    high_score_threshold: int = 75
+    mid_score_threshold: int = 50
+    strategic_countries = {"Singapore", "United States", "United Kingdom", "United Arab Emirates"}
+    strategic_industries = {"Fintech", "Cybersecurity", "IT Services"}
+
+
 class SegmentDesignerAgent:
-    """Designs practical segments based on industry, region, and seniority."""
+    """
+    Assigns each lead to a commercial segment and returns
+    both row level segments and an aggregate view.
+    """
 
-    def __init__(self):
-        # Simple region mapping that can be extended later
-        self.region_map = {
-            "US": "North America",
-            "Canada": "North America",
-            "UK": "Europe",
-            "Germany": "Europe",
-            "Australia": "APAC",
-            "Singapore": "APAC",
-            "Philippines": "APAC",
-            "India": "APAC",
-            "UAE": "Middle East",
-        }
+    def __init__(self, config: SegmentDesignerConfig | None = None) -> None:
+        self.config = config or SegmentDesignerConfig()
 
-    def _region_for_country(self, country: str) -> str:
-        return self.region_map.get(country, "Other")
+    def _parse_company_size(self, value: object) -> int:
+        """
+        Converts textual company size like "11-50" or "1001-5000" to
+        an approximate numeric mid point. Returns 0 if unknown.
+        """
+        if value is None or (isinstance(value, float) and np.isnan(value)):
+            return 0
 
-    def _seniority_bucket(self, seniority: str) -> str:
-        seniority = seniority.lower()
-        if "c-level" in seniority or "vp" in seniority:
-            return "Executive"
-        if "director" in seniority:
-            return "Director"
-        if "senior" in seniority:
-            return "Senior"
-        if "mid" in seniority:
-            return "Mid"
-        return "Other"
+        text = str(value).strip()
+        if "-" in text:
+            parts = text.split("-")
+            try:
+                low = int(parts[0])
+                high = int(parts[1])
+                return int((low + high) / 2)
+            except ValueError:
+                return 0
 
-    def run(self, df: pd.DataFrame):
+        try:
+            return int(text.replace("+", ""))
+        except ValueError:
+            return 0
+
+    def _assign_segment(self, row: pd.Series) -> str:
+        score = row.get("PriorityScore", 0) or 0
+        country = row.get("Country") or ""
+        industry = row.get("Industry") or ""
+        seniority = (row.get("SeniorityLevel") or "").lower()
+        company_size_numeric = self._parse_company_size(row.get("CompanySize"))
+
+        is_strategic_geo = country in self.config.strategic_countries
+        is_strategic_industry = industry in self.config.strategic_industries
+        is_senior = any(
+            key in seniority
+            for key in ["c-level", "chief", "vp", "director", "founder", "owner", "head"]
+        )
+
+        if (
+            score >= self.config.high_score_threshold
+            and is_strategic_geo
+            and is_strategic_industry
+            and company_size_numeric >= 50
+        ):
+            return "Strategic Core"
+
+        if score >= self.config.mid_score_threshold and (is_strategic_geo or is_strategic_industry):
+            return "Growth Focus"
+
+        if score >= 30:
+            return "Nurture"
+
+        return "Low Priority"
+
+    def run(self, df: pd.DataFrame) -> Tuple[pd.DataFrame, pd.DataFrame]:
         df = df.copy()
 
-        df["Region"] = df["Country"].apply(self._region_for_country)
-        df["SeniorityBucket"] = df["SeniorityLevel"].apply(self._seniority_bucket)
+        if "PriorityScore" not in df.columns:
+            df["PriorityScore"] = 0
 
-        df["Segment"] = (
-            df["Industry"].fillna("Unknown")
-            + " | "
-            + df["Region"].fillna("Unknown")
-            + " | "
-            + df["SeniorityBucket"].fillna("Unknown")
-        )
+        df["Segment"] = df.apply(self._assign_segment, axis=1)
 
-        segments_df = (
-            df.groupby("Segment")
-            .agg(
-                LeadCount=("LeadID", "count"),
-                AvgPriority=("PriorityScore", "mean"),
-                Industries=("Industry", lambda x: ", ".join(sorted(set(x)))),
-                Regions=("Region", lambda x: ", ".join(sorted(set(x)))),
-            )
-            .reset_index()
-            .sort_values(by=["AvgPriority", "LeadCount"], ascending=False)
-        )
+        # Aggregate stats per segment
+        segments_df = df.groupby("Segment").agg(
+            LeadCount=("LeadID", "count"),
+            AvgPriorityScore=("PriorityScore", "mean"),
+        ).reset_index()
+
+        segments_df["AvgPriorityScore"] = segments_df["AvgPriorityScore"].round(1)
 
         return df, segments_df
