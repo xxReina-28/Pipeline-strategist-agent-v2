@@ -1,0 +1,4 @@
+name,company,mail,Industry,country_code,job_title,seniority,status
+,OldCo,invalidemail,Retail,us,,,
+Carla Gomez,TechForward,carla@techfwd.com,IT Services,,IT Lead,Lead,Active
+David Tan,FinFlow,david@finflow.io,Fintech,sg,Analyst,,Active

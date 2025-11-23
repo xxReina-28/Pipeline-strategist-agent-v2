@@ -1,105 +1,148 @@
-
 from __future__ import annotations
 
-from dataclasses import dataclass
-from typing import List
+from dataclasses import dataclass, field
+from typing import Iterable, Sequence
 
 import pandas as pd
 
 
 @dataclass
 class DataCleanerConfig:
-    min_company_name_length: int = 2
-    drop_rows_with_no_company: bool = True
-    drop_duplicate_lead_ids: bool = True
+    """
+    Configuration for DataCleanerAgent.
+
+    You can tune this without changing the agent logic.
+    """
+
+    # Columns that should be treated as identifiers when dropping duplicates
+    dedupe_on: Sequence[str] = field(default_factory=lambda: ["Email", "LeadID"])
+
+    # Columns that should be normalized to lower case
+    lowercase_columns: Sequence[str] = field(
+        default_factory=lambda: ["Email", "Country"]
+    )
+
+    # Columns that should be stripped of whitespace around text
+    strip_whitespace_columns: Sequence[str] = field(
+        default_factory=lambda: [
+            "FullName",
+            "CompanyName",
+            "Email",
+            "Industry",
+            "Country",
+            "JobTitle",
+            "SeniorityLevel",
+            "LeadStatus",
+        ]
+    )
+
+    # If True, remove rows that have no email and no company and no full name
+    drop_completely_blank_leads: bool = True
+
+    # Required canonical columns that should always exist on the dataframe
+    # Missing ones will be added as empty columns
+    required_columns: Iterable[str] | None = field(
+        default_factory=lambda: [
+            "LeadID",
+            "FullName",
+            "CompanyName",
+            "Email",
+            "Industry",
+            "CompanySize",
+            "Country",
+            "JobTitle",
+            "SeniorityLevel",
+            "LeadStatus",
+        ]
+    )
 
 
 class DataCleanerAgent:
     """
-    Cleans and normalizes the structured leads dataframe.
+    Cleans and normalizes the leads dataframe coming from RawIngestionAgent.
 
-    Focus areas:
-      - whitespace and casing normalization
-      - light standardization of country and industry
-      - duplicate handling
+    Responsibilities:
+      * Ensure required columns exist
+      * Normalize text fields
+      * Deduplicate on Email or LeadID
+      * Drop obviously empty rows
     """
 
     def __init__(self, config: DataCleanerConfig | None = None) -> None:
         self.config = config or DataCleanerConfig()
 
-        self.country_map = {
-            "usa": "United States",
-            "us": "United States",
-            "u.s.": "United States",
-            "u.s.a.": "United States",
-            "uk": "United Kingdom",
-            "u.k.": "United Kingdom",
-            "uae": "United Arab Emirates",
-        }
+    def _ensure_required_columns(self, df: pd.DataFrame) -> pd.DataFrame:
+        if not self.config.required_columns:
+            return df
 
-        self.industry_map = {
-            "fin tech": "Fintech",
-            "fintech": "Fintech",
-            "financial technology": "Fintech",
-            "cyber security": "Cybersecurity",
-            "cyber-security": "Cybersecurity",
-            "it services": "IT Services",
-            "information technology": "IT Services",
-        }
+        for col in self.config.required_columns:
+            if col not in df.columns:
+                df[col] = pd.NA
+        return df
 
-    def _normalize_string_column(self, series: pd.Series, mode: str) -> pd.Series:
-        series = series.fillna("").astype(str).str.strip()
+    def _strip_whitespace(self, df: pd.DataFrame) -> pd.DataFrame:
+        for col in self.config.strip_whitespace_columns:
+            if col in df.columns and pd.api.types.is_string_dtype(df[col]):
+                df[col] = df[col].astype("string").str.strip()
+        return df
 
-        if mode == "lower":
-            series = series.str.lower()
-        elif mode == "title":
-            series = series.str.title()
+    def _lowercase_columns(self, df: pd.DataFrame) -> pd.DataFrame:
+        for col in self.config.lowercase_columns:
+            if col in df.columns and pd.api.types.is_string_dtype(df[col]):
+                df[col] = df[col].astype("string").str.lower()
+        return df
 
-        # Replace empty strings with None
-        series = series.replace("", pd.NA)
-        return series
+    def _drop_completely_blank(self, df: pd.DataFrame) -> pd.DataFrame:
+        if not self.config.drop_completely_blank_leads:
+            return df
+
+        key_cols = [
+            col
+            for col in ["Email", "FullName", "CompanyName"]
+            if col in df.columns
+        ]
+        if not key_cols:
+            return df
+
+        mask_all_null = df[key_cols].isna().all(axis=1)
+        mask_all_empty = df[key_cols].astype("string").fillna("").eq("").all(axis=1)
+        mask_drop = mask_all_null | mask_all_empty
+
+        return df[~mask_drop].reset_index(drop=True)
+
+    def _deduplicate(self, df: pd.DataFrame) -> pd.DataFrame:
+        """
+        Deduplicate based on configured columns if they exist.
+
+        Order of precedence:
+          1. Email
+          2. LeadID
+        """
+
+        working = df.copy()
+
+        for col in self.config.dedupe_on:
+            if col in working.columns:
+                working = working.drop_duplicates(subset=[col], keep="first")
+
+        return working.reset_index(drop=True)
 
     def run(self, df: pd.DataFrame) -> pd.DataFrame:
-        df = df.copy()
+        """
+        Execute the cleaning pipeline.
 
-        # Basic trimming and casing
-        if "FullName" in df.columns:
-            df["FullName"] = self._normalize_string_column(df["FullName"], "title")
-        if "CompanyName" in df.columns:
-            df["CompanyName"] = self._normalize_string_column(df["CompanyName"], "title")
-        if "Email" in df.columns:
-            df["Email"] = self._normalize_string_column(df["Email"], "lower")
-        if "Industry" in df.columns:
-            df["Industry"] = self._normalize_string_column(df["Industry"], "lower")
-        if "Country" in df.columns:
-            df["Country"] = self._normalize_string_column(df["Country"], "title")
-        if "JobTitle" in df.columns:
-            df["JobTitle"] = self._normalize_string_column(df["JobTitle"], "title")
+        This method is the main entry point the orchestrator should call.
+        """
 
-        # Standardize industry labels
-        if "Industry" in df.columns:
-            df["Industry"] = df["Industry"].replace(self.industry_map)
-            df["Industry"] = df["Industry"].str.title()
+        if df is None or df.empty:
+            return df
 
-        # Standardize country labels
-        if "Country" in df.columns:
-            lowered = df["Country"].str.lower()
-            df["Country"] = lowered.replace(self.country_map)
-            df["Country"] = df["Country"].str.title()
+        cleaned = df.copy()
 
-        # Drop rows with no meaningful company name if configured
-        if self.config.drop_rows_with_no_company and "CompanyName" in df.columns:
-            mask_valid_company = df["CompanyName"].notna() & (
-                df["CompanyName"].str.len() >= self.config.min_company_name_length
-            )
-            df = df[mask_valid_company]
+        cleaned = self._ensure_required_columns(cleaned)
+        cleaned = self._strip_whitespace(cleaned)
+        cleaned = self._lowercase_columns(cleaned)
+        cleaned = self._drop_completely_blank(cleaned)
+        cleaned = self._deduplicate(cleaned)
 
-        # Drop fully empty rows
-        df = df.dropna(how="all")
-
-        # Drop duplicate LeadID if present
-        if self.config.drop_duplicate_lead_ids and "LeadID" in df.columns:
-            df = df.drop_duplicates(subset=["LeadID"])
-
-        df = df.reset_index(drop=True)
-        return df
+        return cleaned

@@ -1,0 +1,151 @@
+id,full name,biz,mail,industry_sector,company size,country_code,role,seniority,last_interaction,status,notes,pain_points,tech_stack,budget_range,priority score
+1,Noah Tan,Lion City Digital,contact@lion.io,cyber security,11-50,London,CISO,Senior IC,2025-10-14,New,Met at fintech summit,Scaling support team,Pipedrive,$5k-$10k,9
+2,Zoe Tan,MetroCall BPO,contact@metrocall.io,financial technology,small,India,Ops Lead,Director,2025-01-25,In Progress,Replied on LinkedIn,Fragmented data across tools,Excel sheets,$5k-$10k,4
+3,Leo Ng,Orbit Analytics,,Cyber-security,500+,Philippines,Growth Lead,IC,2025-12-15,On Hold,Warm intro from partner,High churn in SME tier,Salesforce,Unknown,5
+4,Zoe Lim,EmirTech Solutions,zoe.lim@emirtech.com,Cyber-security,1-10,UK,CISO,Head,2025-05-03,In Progress,Warm intro from partner,High churn in SME tier,Excel sheets,$20k+,6
+5,Lucas Garcia,Desert Cloud Labs,lucas.garcia@desert.com,financial technology,51-200,United States,Customer Success Manager,Head,2025-03-15,Nurture,Came from webinar,Low NPS in enterprise segment,Custom in-house CRM,$0-$5k,4
+6,John Hussein,Desert Cloud Labs,contact@desert.io,Cyber-security,1000+,United Arab Emirates,VP Sales,Founder,2025-07-21,Nurture,Cold outbound list,Manual lead routing,Zoho CRM,$5k-$10k,9
+7,Fatima Brown,Lion City Digital,,Information Technology,201-500,Malaysia,CTO,Founder,2025-02-25,New,Warm intro from partner,Legacy on-prem systems,Zoho CRM,$20k+,10
+8,Emma Smith,MarinaPay,,Information Technology,enterprise,Spain,RevOps Manager,IC,2025-11-24,New,Came from webinar,Fragmented data across tools,Salesforce,$10k-$20k,7
+9,Lucas Yamada,Stellar Fintech,contact@stellar.io,education tech,enterprise,United States,Marketing Manager,Director,2025-11-17,On Hold,Export from legacy CRM,Legacy on-prem systems,Custom in-house CRM,$5k-$10k,9
+10,Arjun Lim,Stellar Fintech,arjun.lim@stellar.com,Information Technology,11-50,Germany,COO,Director,2025-04-02,In Progress,Warm intro from partner,Scaling support team,Zendesk,$0-$5k,9
+11,Isabella Rossi,PalmTree Ventures,,IT services,enterprise,United Kingdom,RevOps Manager,C-level,2025-04-18,Disqualified,Export from legacy CRM,Manual lead routing,Freshdesk,$10k-$20k,8
+12,Arjun Yamada,Orbit Analytics,,financial technology,1-10,United Arab Emirates,Ops Lead,Head,2025-10-08,New,Warm intro from partner,KYC/AML compliance workload,Pipedrive,$0-$5k,1
+13,Leo Ng,MetroCall BPO,contact@metrocall.io,financial technology,enterprise,Germany,CTO,Founder,2025-04-26,Nurture,Replied on LinkedIn,Low NPS in enterprise segment,Salesforce,$0-$5k,7
+14,Chloe Smith,MarinaPay,chloe.smith@marinapay.com,IT services,1-10,SG,Sales Development Rep,VP,2025-02-08,In Progress,Export from legacy CRM,Slow onboarding for new customers,Zoho CRM,$20k+,3
+15,Sara Yamada,IronGate Security,info@irongate.co,manufacturing,enterprise,United Arab Emirates,Marketing Manager,IC,2025-11-18,New,Warm intro from partner,Low NPS in enterprise segment,Zoho CRM,$20k+,8
+16,Priya Ivanova,EmirTech Solutions,contact@emirtech.io,Cyber-security,1001-5000,SG,Head of Sales,C-level,2025-05-26,Nurture,Came from webinar,High churn in SME tier,,$20k+,3
+17,Olivia Brown,IronGate Security,,gaming,1-10,SG,Head of Sales,Founder,2025-09-28,On Hold,Cold outbound list,KYC/AML compliance workload,,$0-$5k,3
+18,Emma Martinez,Orbit Analytics,info@orbit.co,software-as-a-service,11-50,London,Ops Lead,Head,2025-10-20,New,Warm intro from partner,High churn in SME tier,,$10k-$20k,5
+19,Olivia Khan,Lion City Digital,info@lion.co,cyber security,51-200,United States,CISO,Director,2025-08-11,New,Met at fintech summit,Slow onboarding for new customers,Salesforce,$0-$5k,9
+20,Olivia Silva,Nova Systems,olivia.silva@nova.com,FinTech,201-500,Philippines,COO,Director,2025-03-15,On Hold,Came from webinar,KYC/AML compliance workload,,$10k-$20k,2
+21,Isabella Brown,Orbit Analytics,,healthcare,500+,Dubai,Ops Lead,Head,2025-12-11,In Progress,Came from webinar,Slow onboarding for new customers,Excel sheets,$0-$5k,2
+22,Ethan Ong,Nova Systems,contact@nova.io,fin tech,500+,usa,CTO,Founder,2025-09-23,Nurture,Met at fintech summit,Scaling support team,Salesforce,$5k-$10k,9
+23,John Ong,Desert Cloud Labs,info@desert.co,Information Technology,51-200,Dubai,Head of Sales,Director,2025-06-26,New,Requested pricing sheet,Low NPS in enterprise segment,Pipedrive,$0-$5k,6
+24,Fatima Lim,EmirTech Solutions,contact@emirtech.io,Cyber-security,51-200,Dubai,Growth Lead,Manager,2025-07-01,In Progress,Requested pricing sheet,High churn in SME tier,Pipedrive,$10k-$20k,3
+25,Noah Smith,EmirTech Solutions,contact@emirtech.io,fin tech,201-500,Germany,RevOps Manager,Founder,2025-06-10,In Progress,Export from legacy CRM,KYC/AML compliance workload,Pipedrive,$20k+,6
+26,Sara Ong,Orbit Analytics,,gaming,enterprise,United States,Sales Development Rep,VP,2025-01-04,Qualified,Cold outbound list,Manual lead routing,HubSpot,$0-$5k,10
+27,Ethan Garcia,Lion City Digital,ethan.garcia@lion.com,SaaS,1001-5000,India,Ops Lead,Head,2025-05-02,Disqualified,Replied on LinkedIn,KYC/AML compliance workload,,Unknown,4
+28,Chloe Smith,Orbit Analytics,,education tech,11-50,usa,IT Director,Director,2025-09-10,Disqualified,Replied on LinkedIn,Fragmented data across tools,Freshdesk,$10k-$20k,9
+29,Isabella Ivanova,MarinaPay,contact@marinapay.io,software-as-a-service,500+,Malaysia,Sales Development Rep,IC,2025-05-10,In Progress,Replied on LinkedIn,Fragmented data across tools,Zendesk,$20k+,8
+30,Olivia Silva,SkyBridge Capital,olivia.silva@skybridge.com,SaaS,500+,United Kingdom,Customer Success Manager,VP,2025-02-27,In Progress,Came from webinar,Low NPS in enterprise segment,Pipedrive,$5k-$10k,1
+31,John Ivanova,SkyBridge Capital,info@skybridge.co,Information Technology,1001-5000,United Arab Emirates,CISO,Head,2025-12-23,Nurture,No response after 2 emails,High churn in SME tier,Pipedrive,$5k-$10k,1
+32,Noah Hussein,MarinaPay,info@marinapay.co,financial technology,1-10,Saudi Arabia,Customer Success Manager,Head,2025-02-15,In Progress,No response after 2 emails,Fragmented data across tools,Zendesk,Unknown,9
+33,Ethan Ong,RedSand Data,info@redsand.co,Information Technology,small,United Kingdom,Founder,Head,2025-11-09,On Hold,No response after 2 emails,Low NPS in enterprise segment,Excel sheets,$20k+,2
+34,Hana Ivanova,Nova Systems,contact@nova.io,cyber security,51-200,United Arab Emirates,VP Sales,C-level,2025-12-05,Disqualified,Export from legacy CRM,Scaling support team,Freshdesk,$20k+,6
+35,Fatima Yamada,MarinaPay,info@marinapay.co,fin tech,1-10,India,RevOps Manager,C-level,2025-08-01,Qualified,Came from webinar,High churn in SME tier,Freshdesk,Unknown,9
+36,Zoe Lim,IronGate Security,info@irongate.co,IT services,small,United States,Head of Sales,C-level,2025-06-22,Disqualified,Replied on LinkedIn,Legacy on-prem systems,Zendesk,$5k-$10k,10
+37,Fatima Tan,RedSand Data,fatima.tan@redsand.com,Cyber-security,1001-5000,Singapore,CTO,Founder,2025-03-02,Qualified,Replied on LinkedIn,Fragmented data across tools,Pipedrive,$20k+,6
+38,Leo Hussein,RedSand Data,,Cyber-security,11-50,India,Product Manager,IC,2025-12-18,New,Requested pricing sheet,Low NPS in enterprise segment,Salesforce,$0-$5k,1
+39,Miguel Ivanova,EmirTech Solutions,contact@emirtech.io,fin tech,51-200,Dubai,Product Manager,Senior IC,2025-10-07,Nurture,Came from webinar,Fragmented data across tools,Zoho CRM,Unknown,10
+40,Noah Hussein,EmirTech Solutions,noah.hussein@emirtech.com,FinTech,1-10,US,Founder,C-level,2025-07-23,In Progress,Warm intro from partner,Low NPS in enterprise segment,Salesforce,$10k-$20k,10
+41,Noah Hussein,Quantum Ledger,info@quantum.co,SaaS,1000+,Philippines,Marketing Manager,VP,2025-01-28,Nurture,No response after 2 emails,Scaling support team,Freshdesk,$10k-$20k,8
+42,Isabella Smith,HarborSoft,info@harborsoft.co,SaaS,small,United States,Sales Development Rep,Director,2025-06-28,In Progress,Warm intro from partner,Manual lead routing,Zendesk,$5k-$10k,8
+43,Omar Martinez,PalmTree Ventures,info@palmtree.co,Cyber-security,1000+,Singapore,CTO,Founder,2025-04-12,Qualified,Requested pricing sheet,Manual lead routing,Excel sheets,Unknown,1
+44,Arjun Ivanova,Orbit Analytics,info@orbit.co,financial technology,enterprise,India,Growth Lead,Head,2025-12-16,Disqualified,No response after 2 emails,Slow onboarding for new customers,HubSpot,$0-$5k,5
+45,Miguel Smith,Lion City Digital,info@lion.co,financial technology,enterprise,Philippines,Customer Success Manager,VP,2025-07-24,On Hold,Requested pricing sheet,Fragmented data across tools,Zendesk,$10k-$20k,5
+46,Sara Ivanova,Orbit Analytics,sara.ivanova@orbit.com,SaaS,enterprise,usa,Growth Lead,Manager,2025-04-07,Disqualified,No response after 2 emails,Manual lead routing,,Unknown,5
+47,Noah Ong,IronGate Security,contact@irongate.io,cyber security,500+,Philippines,Head of Sales,Manager,2025-05-02,New,Came from webinar,Legacy on-prem systems,Zendesk,$0-$5k,1
+48,Omar Brown,SkyBridge Capital,contact@skybridge.io,IT services,1-10,usa,Founder,Founder,2025-02-27,New,Replied on LinkedIn,Slow onboarding for new customers,Salesforce,Unknown,1
+49,Isabella Rossi,Thames Cyber,isabella.rossi@thames.com,Information Technology,201-500,US,Marketing Manager,C-level,2025-10-20,On Hold,Export from legacy CRM,High churn in SME tier,Zendesk,$20k+,5
+50,Omar Smith,Nova Systems,omar.smith@nova.com,Information Technology,201-500,SG,CISO,Head,2025-05-22,New,Cold outbound list,Low NPS in enterprise segment,Zoho CRM,Unknown,2
+51,Lucas Tan,MarinaPay,,IT services,1-10,Germany,VP Sales,Director,2025-12-10,Disqualified,No response after 2 emails,Scaling support team,Pipedrive,$10k-$20k,10
+52,Olivia Smith,Orbit Analytics,,Information Technology,51-200,Dubai,Marketing Manager,IC,2025-03-26,Qualified,Came from webinar,Slow onboarding for new customers,Salesforce,$20k+,5
+53,Ava Brown,MetroCall BPO,ava.brown@metrocall.com,Information Technology,1-10,Spain,Sales Development Rep,VP,2025-10-09,New,Warm intro from partner,Low NPS in enterprise segment,HubSpot,$10k-$20k,10
+54,John Hussein,Thames Cyber,info@thames.co,FinTech,500+,Saudi Arabia,CTO,C-level,2025-11-27,Nurture,Warm intro from partner,Slow onboarding for new customers,Custom in-house CRM,$20k+,6
+55,Leo Khan,Orbit Analytics,info@orbit.co,hospitality,small,usa,Founder,C-level,2025-09-02,Nurture,Warm intro from partner,Fragmented data across tools,Excel sheets,$10k-$20k,2
+56,Ava Ong,MetroCall BPO,info@metrocall.co,real estate,1001-5000,Singapore,Head of Sales,Head,2025-09-12,On Hold,No response after 2 emails,Slow onboarding for new customers,HubSpot,$5k-$10k,5
+57,Fatima Rossi,RedSand Data,fatima.rossi@redsand.com,cyber security,1-10,Germany,CISO,Head,2025-12-06,Qualified,Met at fintech summit,High churn in SME tier,Salesforce,$5k-$10k,2
+58,Liam Ng,PalmTree Ventures,,real estate,enterprise,Germany,IT Director,Director,2025-07-27,Nurture,No response after 2 emails,Low NPS in enterprise segment,Zendesk,Unknown,3
+59,Ava Ivanova,RedSand Data,ava.ivanova@redsand.com,Information Technology,500+,Dubai,Growth Lead,C-level,2025-06-26,On Hold,Came from webinar,KYC/AML compliance workload,Excel sheets,$10k-$20k,10
+60,Omar Khan,SkyBridge Capital,info@skybridge.co,hospitality,1000+,Spain,COO,C-level,2025-08-11,In Progress,Export from legacy CRM,High churn in SME tier,Pipedrive,$20k+,1
+61,Leo Patel,SkyBridge Capital,info@skybridge.co,software-as-a-service,51-200,Malaysia,Product Manager,IC,2025-03-17,On Hold,Requested pricing sheet,Scaling support team,Zendesk,$0-$5k,9
+62,Liam Tan,Lion City Digital,liam.tan@lion.com,FinTech,small,Dubai,Growth Lead,Director,2025-06-20,Disqualified,Replied on LinkedIn,Scaling support team,Custom in-house CRM,Unknown,7
+63,Leo Khan,Lion City Digital,leo.khan@lion.com,manufacturing,11-50,Germany,VP Sales,Director,2025-04-24,New,Replied on LinkedIn,Scaling support team,Salesforce,$20k+,3
+64,Hana Lim,Stellar Fintech,,fin tech,1000+,SG,COO,C-level,2025-03-08,On Hold,Replied on LinkedIn,Legacy on-prem systems,Zoho CRM,$5k-$10k,2
+65,Zoe Ong,MarinaPay,info@marinapay.co,Information Technology,51-200,London,VP Sales,Founder,2025-11-09,Nurture,Came from webinar,KYC/AML compliance workload,Zendesk,$10k-$20k,9
+66,Lucas Ng,SkyBridge Capital,info@skybridge.co,education tech,500+,US,Product Manager,Director,2025-04-13,Nurture,Warm intro from partner,Low NPS in enterprise segment,Freshdesk,Unknown,6
+67,Omar Brown,Lion City Digital,,cyber security,1-10,Malaysia,Ops Lead,IC,2025-10-24,Nurture,Came from webinar,Low NPS in enterprise segment,Custom in-house CRM,$5k-$10k,4
+68,Zoe Brown,PalmTree Ventures,zoe.brown@palmtree.com,SaaS,1-10,Dubai,Founder,Founder,2025-01-19,Qualified,Cold outbound list,Scaling support team,Excel sheets,$10k-$20k,7
+69,Lucas Ivanova,HarborSoft,,SaaS,51-200,Philippines,Founder,Founder,2025-05-24,Qualified,Warm intro from partner,Slow onboarding for new customers,Salesforce,$5k-$10k,4
+70,Ava Ong,Thames Cyber,info@thames.co,Information Technology,1-10,United Arab Emirates,Founder,Senior IC,2025-08-12,Disqualified,Came from webinar,High churn in SME tier,Custom in-house CRM,$0-$5k,4
+71,Priya Tan,Quantum Ledger,contact@quantum.io,manufacturing,11-50,usa,CISO,Founder,2025-12-10,Disqualified,Replied on LinkedIn,Scaling support team,Zoho CRM,$0-$5k,1
+72,Hana Yamada,Orbit Analytics,info@orbit.co,FinTech,small,Dubai,COO,C-level,2025-10-24,Disqualified,Cold outbound list,High churn in SME tier,Salesforce,$20k+,10
+73,Ethan Brown,Stellar Fintech,info@stellar.co,software-as-a-service,small,UK,VP Sales,VP,2025-02-22,Qualified,Requested pricing sheet,KYC/AML compliance workload,Freshdesk,$10k-$20k,4
+74,Noah Ong,EmirTech Solutions,noah.ong@emirtech.com,IT services,1-10,UK,Growth Lead,VP,2025-04-05,On Hold,Export from legacy CRM,Scaling support team,,$5k-$10k,10
+75,Olivia Ong,EmirTech Solutions,olivia.ong@emirtech.com,financial technology,500+,Dubai,RevOps Manager,Manager,2025-03-18,Qualified,Cold outbound list,Scaling support team,HubSpot,$5k-$10k,1
+76,Chloe Hussein,Thames Cyber,chloe.hussein@thames.com,financial technology,51-200,usa,Founder,IC,2025-03-24,Nurture,Warm intro from partner,Scaling support team,Zendesk,$20k+,6
+77,Arjun Martinez,Orbit Analytics,arjun.martinez@orbit.com,IT services,enterprise,London,Founder,Founder,2025-11-01,New,No response after 2 emails,High churn in SME tier,Freshdesk,$0-$5k,8
+78,Liam Ng,RedSand Data,liam.ng@redsand.com,fin tech,51-200,Dubai,Founder,VP,2025-07-20,On Hold,Came from webinar,Slow onboarding for new customers,,Unknown,7
+79,Noah Hussein,Lion City Digital,info@lion.co,FinTech,small,UK,VP Sales,C-level,2025-06-27,Nurture,Replied on LinkedIn,High churn in SME tier,Salesforce,$10k-$20k,7
+80,Leo Khan,Nova Systems,info@nova.co,Cyber-security,11-50,Dubai,Marketing Manager,Senior IC,2025-02-14,New,Requested pricing sheet,Legacy on-prem systems,,$0-$5k,10
+81,Fatima Silva,Desert Cloud Labs,,software-as-a-service,1001-5000,India,RevOps Manager,IC,2025-05-20,Qualified,Requested pricing sheet,Scaling support team,,$5k-$10k,3
+82,Priya Ivanova,EmirTech Solutions,priya.ivanova@emirtech.com,FinTech,500+,Philippines,Ops Lead,Head,2025-07-28,On Hold,Met at fintech summit,Manual lead routing,HubSpot,$5k-$10k,5
+83,Hana Lim,Desert Cloud Labs,contact@desert.io,cyber security,1001-5000,United Kingdom,Marketing Manager,Manager,2025-12-21,New,Warm intro from partner,Low NPS in enterprise segment,Freshdesk,$20k+,8
+84,Leo Rossi,Desert Cloud Labs,leo.rossi@desert.com,cyber security,1-10,usa,CTO,Manager,2025-10-02,Disqualified,Warm intro from partner,Manual lead routing,Zendesk,$20k+,8
+85,Zoe Yamada,MarinaPay,zoe.yamada@marinapay.com,cyber security,1000+,Saudi Arabia,Sales Development Rep,Senior IC,2025-05-22,Disqualified,No response after 2 emails,Manual lead routing,HubSpot,$5k-$10k,7
+86,Zoe Tan,Stellar Fintech,contact@stellar.io,financial technology,500+,UK,Founder,VP,2025-02-01,Nurture,Replied on LinkedIn,Legacy on-prem systems,Zoho CRM,$20k+,9
+87,Miguel Silva,MetroCall BPO,miguel.silva@metrocall.com,real estate,1001-5000,Philippines,RevOps Manager,IC,2025-07-01,Nurture,Warm intro from partner,Fragmented data across tools,Freshdesk,Unknown,7
+88,Ethan Brown,Orbit Analytics,contact@orbit.io,Cyber-security,small,usa,RevOps Manager,VP,2025-02-14,New,Export from legacy CRM,High churn in SME tier,Freshdesk,Unknown,2
+89,Ava Ong,Nova Systems,,SaaS,51-200,London,Marketing Manager,Senior IC,2025-09-17,In Progress,Requested pricing sheet,Fragmented data across tools,Zoho CRM,$5k-$10k,2
+90,Isabella Brown,IronGate Security,isabella.brown@irongate.com,FinTech,51-200,Dubai,Growth Lead,Founder,2025-08-25,On Hold,No response after 2 emails,Fragmented data across tools,Custom in-house CRM,$5k-$10k,8
+91,Emma Yamada,SkyBridge Capital,emma.yamada@skybridge.com,software-as-a-service,1000+,United States,Customer Success Manager,Senior IC,2025-05-15,Nurture,Met at fintech summit,KYC/AML compliance workload,Custom in-house CRM,$10k-$20k,2
+92,Emma Martinez,Quantum Ledger,emma.martinez@quantum.com,IT services,small,Spain,Growth Lead,Head,2025-06-20,Nurture,Cold outbound list,KYC/AML compliance workload,Zendesk,$0-$5k,6
+93,Emma Silva,PalmTree Ventures,info@palmtree.co,FinTech,small,London,Customer Success Manager,Manager,2025-06-12,Qualified,Replied on LinkedIn,High churn in SME tier,Custom in-house CRM,Unknown,1
+94,Leo Ng,Desert Cloud Labs,,FinTech,500+,Malaysia,IT Director,Manager,2025-06-03,On Hold,Cold outbound list,Fragmented data across tools,Excel sheets,$20k+,3
+95,Zoe Patel,Orbit Analytics,,cyber security,51-200,Malaysia,CISO,Senior IC,2025-11-22,Nurture,Requested pricing sheet,KYC/AML compliance workload,Custom in-house CRM,$10k-$20k,3
+96,Olivia Garcia,Thames Cyber,contact@thames.io,IT services,51-200,London,Marketing Manager,Director,2025-02-17,On Hold,Met at fintech summit,Fragmented data across tools,Zoho CRM,Unknown,7
+97,Isabella Rossi,HarborSoft,info@harborsoft.co,real estate,1-10,United Kingdom,Sales Development Rep,VP,2025-11-24,In Progress,No response after 2 emails,Manual lead routing,Zendesk,$5k-$10k,9
+98,Miguel Brown,Thames Cyber,,SaaS,small,UK,Product Manager,Director,2025-07-17,On Hold,Replied on LinkedIn,Legacy on-prem systems,Pipedrive,Unknown,3
+99,Sara Tan,PalmTree Ventures,sara.tan@palmtree.com,IT services,enterprise,Philippines,RevOps Manager,Senior IC,2025-05-03,In Progress,Came from webinar,Slow onboarding for new customers,,$5k-$10k,7
+100,Emma Lim,IronGate Security,emma.lim@irongate.com,logistics,1001-5000,Philippines,Head of Sales,C-level,2025-09-12,In Progress,Replied on LinkedIn,Scaling support team,Custom in-house CRM,$5k-$10k,1
+101,Leo Lim,Orbit Analytics,contact@orbit.io,real estate,51-200,usa,Head of Sales,Director,2025-08-23,In Progress,No response after 2 emails,Slow onboarding for new customers,HubSpot,$0-$5k,1
+102,Sara Ivanova,EmirTech Solutions,info@emirtech.co,FinTech,11-50,Saudi Arabia,Growth Lead,Director,2025-04-10,New,Met at fintech summit,Low NPS in enterprise segment,Freshdesk,Unknown,8
+103,Emma Ng,EmirTech Solutions,contact@emirtech.io,healthcare,51-200,Singapore,Founder,C-level,2025-01-20,Qualified,Export from legacy CRM,High churn in SME tier,Zoho CRM,$0-$5k,9
+104,Chloe Ng,MetroCall BPO,chloe.ng@metrocall.com,Information Technology,1001-5000,Saudi Arabia,RevOps Manager,Founder,2025-01-21,Nurture,Requested pricing sheet,Manual lead routing,HubSpot,$10k-$20k,2
+105,Chloe Ivanova,Lion City Digital,,software-as-a-service,51-200,UAE,Head of Sales,VP,2025-09-11,Disqualified,Cold outbound list,Slow onboarding for new customers,Zendesk,$5k-$10k,3
+106,Emma Patel,Thames Cyber,,education tech,201-500,SG,Head of Sales,Head,2025-01-11,Qualified,Replied on LinkedIn,Slow onboarding for new customers,Excel sheets,$0-$5k,4
+107,Hana Garcia,EmirTech Solutions,,SaaS,11-50,usa,Growth Lead,VP,2025-07-13,Disqualified,No response after 2 emails,High churn in SME tier,Custom in-house CRM,$5k-$10k,8
+108,Priya Garcia,RedSand Data,priya.garcia@redsand.com,SaaS,1001-5000,United States,Marketing Manager,C-level,2025-10-27,In Progress,Came from webinar,Fragmented data across tools,Salesforce,$0-$5k,6
+109,Hana Brown,SkyBridge Capital,contact@skybridge.io,Information Technology,small,India,COO,Founder,2025-01-24,Qualified,Replied on LinkedIn,Manual lead routing,HubSpot,$0-$5k,7
+110,Chloe Silva,Thames Cyber,chloe.silva@thames.com,SaaS,51-200,United Kingdom,RevOps Manager,Founder,2025-01-05,New,Export from legacy CRM,Fragmented data across tools,Custom in-house CRM,$20k+,10
+111,John Martinez,HarborSoft,,software-as-a-service,small,Philippines,Growth Lead,Senior IC,2025-10-05,On Hold,Requested pricing sheet,High churn in SME tier,Custom in-house CRM,$10k-$20k,4
+112,Noah Tan,Lion City Digital,info@lion.co,financial technology,enterprise,Saudi Arabia,Marketing Manager,Director,2025-05-23,Nurture,Export from legacy CRM,Manual lead routing,Zendesk,$5k-$10k,2
+113,Isabella Ong,Orbit Analytics,isabella.ong@orbit.com,IT services,1000+,Spain,CISO,VP,2025-12-03,On Hold,Came from webinar,Manual lead routing,Zoho CRM,$5k-$10k,6
+114,Arjun Ivanova,Orbit Analytics,contact@orbit.io,travel agency,small,Dubai,Head of Sales,VP,2025-09-19,Qualified,No response after 2 emails,Legacy on-prem systems,Salesforce,$0-$5k,5
+115,Ava Patel,Lion City Digital,info@lion.co,IT services,11-50,India,CTO,VP,2025-11-03,Nurture,No response after 2 emails,Fragmented data across tools,Zoho CRM,Unknown,10
+116,Lucas Hussein,HarborSoft,lucas.hussein@harborsoft.com,Cyber-security,enterprise,SG,CTO,Director,2025-03-06,Qualified,Export from legacy CRM,Fragmented data across tools,,$10k-$20k,2
+117,Sara Ivanova,PalmTree Ventures,contact@palmtree.io,gaming,500+,United States,Ops Lead,Senior IC,2025-09-21,In Progress,Cold outbound list,Legacy on-prem systems,Custom in-house CRM,Unknown,1
+118,Jane Ng,Stellar Fintech,contact@stellar.io,education tech,1001-5000,United States,Ops Lead,IC,2025-08-21,On Hold,Came from webinar,Manual lead routing,Zendesk,$5k-$10k,7
+119,Hana Yamada,Orbit Analytics,info@orbit.co,software-as-a-service,1001-5000,United Kingdom,Product Manager,Founder,2025-04-11,On Hold,Cold outbound list,Fragmented data across tools,Custom in-house CRM,$10k-$20k,7
+120,Isabella Hussein,Desert Cloud Labs,,IT services,201-500,UAE,Product Manager,Senior IC,2025-05-15,In Progress,Cold outbound list,Scaling support team,HubSpot,$10k-$20k,7
+121,Zoe Smith,IronGate Security,,gaming,1000+,United Kingdom,VP Sales,Manager,2025-08-17,Nurture,No response after 2 emails,Manual lead routing,Zendesk,$0-$5k,2
+122,Ava Silva,SkyBridge Capital,,gaming,1-10,UK,Head of Sales,Director,2025-08-20,Disqualified,No response after 2 emails,Manual lead routing,,$0-$5k,2
+123,Ethan Rossi,RedSand Data,info@redsand.co,financial technology,1000+,Philippines,Head of Sales,C-level,2025-01-19,On Hold,Export from legacy CRM,Fragmented data across tools,,$10k-$20k,2
+124,Ava Silva,SkyBridge Capital,ava.silva@skybridge.com,SaaS,51-200,United States,Marketing Manager,C-level,2025-06-26,Qualified,Requested pricing sheet,Legacy on-prem systems,Pipedrive,Unknown,9
+125,Ava Silva,Stellar Fintech,,fin tech,small,Dubai,Customer Success Manager,Founder,2025-03-20,On Hold,Cold outbound list,Fragmented data across tools,Custom in-house CRM,$5k-$10k,7
+126,Zoe Patel,EmirTech Solutions,info@emirtech.co,cyber security,500+,usa,Product Manager,IC,2025-06-11,Disqualified,Warm intro from partner,High churn in SME tier,Excel sheets,$0-$5k,10
+127,Priya Brown,PalmTree Ventures,priya.brown@palmtree.com,SaaS,small,London,CTO,C-level,2025-03-27,Disqualified,Export from legacy CRM,KYC/AML compliance workload,Salesforce,$5k-$10k,1
+128,Liam Garcia,MarinaPay,info@marinapay.co,FinTech,enterprise,UK,Growth Lead,Founder,2025-12-24,New,Cold outbound list,Low NPS in enterprise segment,,$10k-$20k,8
+129,Arjun Smith,Desert Cloud Labs,,gaming,enterprise,Spain,COO,Director,2025-10-16,In Progress,Export from legacy CRM,Manual lead routing,,$10k-$20k,4
+130,Hana Hussein,Nova Systems,,software-as-a-service,small,Germany,COO,Director,2025-05-04,On Hold,Replied on LinkedIn,High churn in SME tier,Custom in-house CRM,$5k-$10k,5
+131,John Brown,Lion City Digital,,fin tech,small,Spain,VP Sales,Head,2025-09-09,On Hold,Came from webinar,Legacy on-prem systems,Salesforce,Unknown,10
+132,Miguel Ivanova,Stellar Fintech,contact@stellar.io,software-as-a-service,201-500,Saudi Arabia,Head of Sales,Senior IC,2025-07-11,Disqualified,No response after 2 emails,Scaling support team,Zoho CRM,$0-$5k,9
+133,Lucas Smith,PalmTree Ventures,info@palmtree.co,education tech,201-500,Germany,Growth Lead,Director,2025-06-10,Disqualified,Met at fintech summit,Scaling support team,Pipedrive,Unknown,1
+134,Lucas Smith,RedSand Data,info@redsand.co,real estate,small,SG,CTO,Director,2025-01-01,Qualified,Warm intro from partner,Fragmented data across tools,Excel sheets,$20k+,9
+135,Arjun Yamada,RedSand Data,info@redsand.co,education tech,500+,Saudi Arabia,VP Sales,Senior IC,2025-06-06,Disqualified,No response after 2 emails,Manual lead routing,Zoho CRM,$0-$5k,6
+136,Hana Martinez,PalmTree Ventures,info@palmtree.co,SaaS,1001-5000,United Kingdom,Customer Success Manager,VP,2025-02-13,Disqualified,Warm intro from partner,Legacy on-prem systems,Zoho CRM,$20k+,6
+137,Miguel Tan,Nova Systems,,Cyber-security,1000+,Spain,Founder,IC,2025-05-21,Qualified,Export from legacy CRM,KYC/AML compliance workload,Salesforce,$20k+,5
+138,Lucas Smith,PalmTree Ventures,lucas.smith@palmtree.com,IT services,500+,US,COO,Head,2025-04-05,Nurture,Cold outbound list,Slow onboarding for new customers,Custom in-house CRM,$20k+,9
+139,Priya Hussein,MetroCall BPO,contact@metrocall.io,logistics,11-50,UK,Customer Success Manager,Founder,2025-09-23,Qualified,Warm intro from partner,Scaling support team,HubSpot,Unknown,9
+140,Olivia Martinez,MetroCall BPO,info@metrocall.co,FinTech,11-50,usa,CISO,Head,2025-12-19,Nurture,Warm intro from partner,Slow onboarding for new customers,HubSpot,$20k+,3
+141,Arjun Smith,SkyBridge Capital,,Information Technology,1-10,Spain,Sales Development Rep,Director,2025-01-24,In Progress,Warm intro from partner,KYC/AML compliance workload,Freshdesk,$10k-$20k,2
+142,Fatima Tan,RedSand Data,fatima.tan@redsand.com,healthcare,500+,Germany,Sales Development Rep,Manager,2025-03-25,Disqualified,Replied on LinkedIn,Fragmented data across tools,Freshdesk,$20k+,7
+143,Ava Ng,PalmTree Ventures,,gaming,11-50,Dubai,CTO,C-level,2025-09-05,Disqualified,Export from legacy CRM,KYC/AML compliance workload,HubSpot,$10k-$20k,8
+144,Fatima Smith,MetroCall BPO,contact@metrocall.io,Cyber-security,small,London,COO,Manager,2025-05-07,Disqualified,Warm intro from partner,KYC/AML compliance workload,Freshdesk,Unknown,1
+145,Miguel Ivanova,Orbit Analytics,info@orbit.co,FinTech,1-10,SG,VP Sales,IC,2025-07-15,In Progress,Export from legacy CRM,KYC/AML compliance workload,Zoho CRM,Unknown,5
+146,Miguel Ong,RedSand Data,,SaaS,201-500,usa,Founder,Manager,2025-11-17,In Progress,Replied on LinkedIn,Manual lead routing,Excel sheets,$0-$5k,9
+147,Omar Lim,Lion City Digital,info@lion.co,retail,1-10,India,COO,C-level,2025-09-11,Disqualified,Replied on LinkedIn,High churn in SME tier,Zoho CRM,$10k-$20k,7
+148,Lucas Hussein,MetroCall BPO,,IT services,51-200,London,Growth Lead,Founder,2025-01-18,Nurture,Replied on LinkedIn,Legacy on-prem systems,Freshdesk,$5k-$10k,5
+149,Olivia Garcia,PalmTree Ventures,,fin tech,11-50,Spain,Customer Success Manager,Head,2025-01-09,Nurture,Met at fintech summit,Scaling support team,Pipedrive,Unknown,9
+150,Olivia Yamada,IronGate Security,,manufacturing,1-10,usa,VP Sales,Head,2025-12-04,Disqualified,No response after 2 emails,Low NPS in enterprise segment,Pipedrive,$20k+,4
