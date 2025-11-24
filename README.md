@@ -1,213 +1,181 @@
-📘 README.md — Pipeline Strategist Agent (PSA)
-Pipeline Strategist Agent
+# Pipeline Strategist Agent (PSA): A Multi-Agent GTM Intelligence Engine
 
-A modular outbound GTM engine that transforms raw lead lists into a fully-generated, multi-segment go-to-market playbook.
+The **Pipeline Strategist Agent (PSA)** is a modular, multi-agent system designed to turn messy B2B lead data into a complete **GTM intelligence workflow**.  
+It ingests, cleans, enriches, scores, segments, and generates a structured **Outbound GTM Playbook** using deterministic logic and optional LLM-powered insights.
 
-Built for the Google AI Agents Intensive Capstone.
-Refined into a production-grade portfolio project.
+PSA is engineered for reproducibility, clarity, and enterprise-grade extensibility.
 
-What This Agent Does
-The Pipeline Strategist Agent takes any messy lead file (CSV/TXT) and automatically:
+---
 
-1. Ingests & normalizes data
-  - maps arbitrary headers to canonical fields
-  - handles weird CSVs and inconsistent formatting
+## Architecture Overview
 
-2. Cleans & validates leads
-
-  - whitespace normalization
-  - email normalization
-  - deduplication
-  - blank-row elimination
-  - required-column creation
-
-3. Optionally runs AI enrichment
-
- - pain points
- - behavioral signals
- - ICP fit notes
-
-4. Scores leads
-
-  - role, industry, region, seniority
-  - strategic value
-  - quality indicators
-
-5. Segments the list into:
-
-  - A1 Strategic ICP
-  - A2 Standard ICP
-  - B1 Contactable Leads
-  - B2 AI-Potential Leads
-  - C0 Disqualified
-
-6. Polishes final cleaned dataset
-7. Generates a complete GTM Playbook (Markdown)
-8. Produces a Quality Report
-
-All outputs are saved in a structured folder.
-
-Outputs Generated
-
-Each run produces:
-
-  output_dir/
-    cleaned_scored_leads.csv
-    lead_segments.csv
-    outbound_playbook.md
-    quality_report.md
+PSA uses a **sequential multi-agent architecture**. Each agent transforms the input, adds structured context, and passes it downstream.
 
 
-These artifacts can be directly included in a sales enablement library, CRM upload, or GTM ops workflow.
+### **High-Level Flow**
+1. **Input Layer** — raw CSV/TXT  
+2. **Data Processing Module** — cleaning & normalization  
+3. **Analytics Module** — enrichment, scoring, segmentation  
+4. **Output Module** — polished CSVs + GTM playbook + quality report  
 
-High-Level Architecture
-┌──────────────────────────┐
-│ Raw Ingestion (CSV/TXT)  │
-└──────────────┬───────────┘
-               ▼
-┌──────────────────────────┐
-│ Data Cleaner             │
-│ - normalize headers      │
-│ - remove blanks          │
-│ - deduplicate            │
-└──────────────┬───────────┘
-               ▼
-┌──────────────────────────┐
-│ (Optional) AI Enrichment │
-│ - pain points            │
-│ - ICP signals            │
-└──────────────┬───────────┘
-               ▼
-┌──────────────────────────┐
-│ Lead Scorer              │
-└──────────────┬───────────┘
-               ▼
-┌──────────────────────────┐
-│ Segment Designer         │
-│ A1 / A2 / B1 / B2 / C0   │
-└──────────────┬───────────┘
-               ▼
-┌──────────────────────────┐
-│ Output Polisher          │
-└──────────────┬───────────┘
-               ▼
-┌──────────────────────────┐
-│ Playbook Writer          │
-│ + Quality Report         │
-└──────────────────────────┘
+---
 
-How to Run
+## Agents and Responsibilities
 
-1. Install dependencies
-pip install -r requirements.txt
+### **1. RawIngestionAgent**
+- Accepts CSV/TXT  
+- Normalizes arbitrary headers  
+- Maps fields into a canonical schema  
+- Outputs consistent input for the rest of the system  
 
-2. Run the pipeline
-python -m pipeline_agent.agent \
-  --input_csv tests/data/minimal.csv \
-  --output_dir outputs/run_example
+---
 
-3. Optional: skip AI enrichment
-python -m pipeline_agent.agent \
-  --input_csv yourfile.csv \
-  --output_dir outputs/run_no_ai \
-  --skip_ai
+### **2. DataCleanerAgent**
+- Removes duplicates  
+- Standardizes casing & whitespace  
+- Validates required fields  
+- Drops invalid rows  
 
-Test Datasets Included
-Located in:
+Produces clean, reliable lead data.
 
-tests/data/
-✔ minimal.csv
-Clean, simple inputs for smoke testing.
+---
 
-✔ dirty.csv
-Tests cleaning, normalization, and deduplication.
+### **3. AIEnrichmentAgent (Gemini-Ready / Optional)**
+This agent is **optional at runtime**, but fully integrated into the architecture.
 
-✔ weird_headers.csv
-Tests header aliasing + ingestion resilience.
-These files ensure the pipeline behaves predictably even with ugly real-world data.
+When enabled, it:
+- Builds a structured JSON prompt  
+- Sends it to Gemini (or simulated Gemini output if offline)  
+- Produces:
+  - inferred pain points  
+  - maturity signals  
+  - value drivers  
+  - risks  
+  - narrative summary  
 
-Key Modules
-🔹 RawIngestionAgent
-Handles CSV or TXT ingestion. Applies header normalization.
+These are combined into a single `AI_Notes` column and used downstream.
 
-🔹 DataCleanerAgent
-Ensures required columns exist, applies whitespace cleanup, lowercasing, dedupe.
+Disable anytime with:
+    --skip_ai
 
-🔹 LeadScorerAgent
-Assigns a strategic score for segmentation.
+---
 
-🔹 SegmentDesignerAgent
-Segment logic used by the GTM framework.
+### **4. LeadScorerAgent**
+Assigns a **StrategicScore** using:
+- industry  
+- seniority  
+- job title patterns  
+- contactability  
+- optional AI-inferred insights  
 
-🔹 PlaybookWriterAgent
-Generates a fully formatted Markdown GTM playbook with:
-  - narrative
-  - positioning
-  - channel strategy
-  - essaging templates
-  - AI-inferred pain points
+---
 
-🔹 OutputPolisherAgent
-Final dataframe refinements.
+### **5. SegmentDesignerAgent**
+Classifies each lead into PSA segments:
+- **A1** – Strategic ICP  
+- **A2** – Standard ICP  
+- **B1** – Contactable Leads  
+- **B2** – AI-Potential Leads  
+- **C0** – Disqualified  
 
-🔹 QualityCheckerAgent
-Validates completeness and logic of final output.
+Outputs a segment table + summary context.
 
-Example Playbook Snippet
+---
 
-  ## A1 Strategic ICP
+### **6. OutputPolisherAgent**
+- Reorders columns  
+- Normalizes values  
+- Ensures final CSVs are clean and human-readable  
 
-  ### Ideal personas
-  C-level and VP-level executives in cyber, fintech, IT, and SaaS.
+---
 
-  ### Strategic narrative
-  You are speaking to owners of risk, growth, and cost.
+### **7. PlaybookWriterAgent**
+Generates a full Markdown **Outbound GTM Playbook**, including:
+- segment summaries  
+- suggested angles  
+- AI-based pain points  
+- recommended channels  
+- narrative messaging  
 
-  ### Messaging template
-  Hi {{Name}},
-  Given your role overseeing {{Function}} at {{Company}}, I wanted to share a quick observation...
+---
 
-Error Handling & Pipeline Hardening
+### **8. QualityCheckerAgent**
+Produces a final QA report including:
+- missing values  
+- scoring sanity  
+- segmentation validation  
+- playbook header verification  
 
-The pipeline is hardened with:
+Outputs: `quality_report.md`
 
-  - safe file validation
-  - defensive playbook generation
-  - early termination if cleaning removes all rows
-  - robust header mapping
-  - guaranteed markdown output
-  - clear human-readable errors
+---
 
-This makes the system production-safe and predictable.
+## How to Run PSA
 
-Folder Structure:
+### **Basic run**
 
-  pipeline_agent/
-    agent.py
-    sub_agents/
-      raw_ingestion.py
-      data_cleaner.py
-      segment_designer.py
-      lead_scorer.py
-      playbook_writer.py
-      quality_checker.py
-      output_polisher.py
-    tools/
-  tests/
-    data/
-  outputs/
-  README.md
+  python -m pipeline_agent.agent \
+    --input_csv path/to/leads.csv \
+    --output_dir outputs/run_001
 
-Future Enhancements
+**Run with Gemini-style enrichment (default)**
 
-  - Config-driven scoring + ICP rules
-  - Multi-industry playbook templates
-  - PDF playbook generation
-  - Web UI + API interface
-  - CRM connector (HubSpot / Salesforce input + output)
+  python -m pipeline_agent.agent \
+    --input_csv path/to/leads.csv \
+    --output_dir outputs/run_gemini
 
-Author:
+**Disable enrichment**
 
-Niña Peterine Sheen Suico (Reina)
-Business Systems/Strategy Analyst in the making
-Building GTM systems, AI agents, and operational intelligence frameworks.
+  python -m pipeline_agent.agent \
+    --input_csv path/to/leads.csv \
+    --output_dir outputs/run_no_ai \
+    --skip_ai
+
+If no real API key is configured, PSA automatically uses a simulated Gemini response for stability.
+
+## Output Files
+
+Each run generates four artifacts:
+
+|File	| Description |
+| cleaned_scored_leads.csv	| Final cleaned, enriched, and scored lead dataset
+| lead_segments.csv	| Segment-level summary table
+| outbound_playbook.md	| Full Markdown GTM playbook
+| quality_report.md	| Data validation & pipeline health report
+
+## Test Datasets
+
+Provided under tests/data/:
+  - minimal.csv
+  - dirty.csv
+  - weird_headers.csv
+These validate ingestion, cleaning, segmentation, and enrichment robustness.
+
+## Project Structure
+
+pipeline_agent/
+  agent.py
+  sub_agents/
+    raw_ingestion.py
+    data_cleaner.py
+    ai_enrichment.py
+    lead_scorer.py
+    segment_designer.py
+    output_polisher.py
+    playbook_writer.py
+    quality_checker.py
+tests/
+outputs/
+README.md
+
+## Why PSA Matters
+
+PSA demonstrates how modern multi-agent systems can automate real-world GTM data workflows using:
+  - deterministic operations
+  - context-passing across agents
+  - LLM-enriched reasoning (optional)
+  - strong observability
+  - clean artifact generation
+It blends AI agents and traditional data engineering in a reproducible, production-ready design.
+
+
