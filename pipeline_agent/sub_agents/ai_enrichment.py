@@ -1,398 +1,196 @@
 from __future__ import annotations
 
-from typing import Any, Dict, List, Optional
+from dataclasses import dataclass
+from typing import Any, Dict, List
+
+import json
+import logging
 
 import pandas as pd
 
+logger = logging.getLogger(__name__)
 
-# Core industries and regions we care most about
-CORE_INDUSTRIES = {
-    "fintech",
-    "cybersecurity",
-    "it services",
-    "saas",
-}
 
-STRATEGIC_REGIONS = {
-    "singapore",
-    "united arab emirates",
-    "united kingdom",
-    "united states",
-}
+GEMINI_PROMPT_TEMPLATE = """
+You are part of the Pipeline Strategist Agent, a multi-agent GTM system.
+
+Given the following lead record (in JSON), infer structured GTM insights.
+
+Return a JSON object with the following keys:
+- pain_points: list of top 2–4 likely business pains
+- maturity_signals: list of buying-readiness or growth indicators
+- value_drivers: list of angles that are likely to resonate
+- risk_factors: list of potential blockers or disqualifiers
+- narrative: 1–2 sentence summary that an SDR could reuse directly
+
+Lead record (JSON):
+{lead_json}
+"""
+
+
+@dataclass
+class AIEnrichmentConfig:
+    """
+    Configuration for the AIEnrichmentAgent.
+
+    simulate:
+        If True, use a deterministic, hard-coded "fake Gemini" response.
+        This keeps the pipeline fully runnable in environments where the
+        real Gemini API is not available (e.g. Kaggle, CI, offline dev).
+
+        For a production deployment you can set simulate=False and implement
+        a real call in `_call_gemini_api`.
+    """
+
+    simulate: bool = True
+    model: str = "gemini-1.5-flash"  # Placeholder, not used in this repo.
 
 
 class AIEnrichmentAgent:
     """
-    Lightweight AI-style enrichment layer.
+    Optional AI enrichment layer that decorates each lead with AI_Notes.
 
-    This version is fully rule-based so it works offline (GitHub Codespaces,
-    Kaggle, local). Later you can swap the internals to call an LLM while
-    keeping the same public interface.
+    The Agent is designed to be Gemini-ready:
 
-    It adds columns like.
-      - ICPFitLabel            ('high' / 'medium' / 'low')
-      - ICPFitReason           (short explanation string)
-      - RiskFlag               (basic risk notes, may be empty)
-      - SuggestedPrimaryChannel('email', 'linkedin', 'mixed', etc.)
-      - Persona                (short human-readable profile)
+    - It constructs a structured prompt (see GEMINI_PROMPT_TEMPLATE).
+    - It expects a JSON-like response with pain points, signals, etc.
+    - In this capstone / open-source version, it defaults to a simulated
+      response so the pipeline is stable without external API keys.
+
+    The resulting insights are flattened into a human-readable `AI_Notes`
+    string column that downstream agents can consume.
     """
 
-    def __init__(self, use_llm: bool = False) -> None:
-        # Reserved for future. currently everything is rule-based
-        self.use_llm = use_llm
+    def __init__(self, config: AIEnrichmentConfig | None = None) -> None:
+        self.config = config or AIEnrichmentConfig()
 
     # ------------------------------------------------------------------
     # Public API
     # ------------------------------------------------------------------
 
     def run(self, df: pd.DataFrame) -> pd.DataFrame:
-        if df.empty:
+        if df is None or df.empty:
+            logger.info("AIEnrichmentAgent: received empty dataframe, skipping.")
             return df
 
         df = df.copy()
+        notes: List[str] = []
 
-        enriched_rows: List[Dict[str, Any]] = []
         for _, row in df.iterrows():
-            insights = self._enrich_rule_based(row)
-            enriched_rows.append(insights)
+            lead_dict = row.to_dict()
 
-        insights_df = pd.DataFrame(enriched_rows, index=df.index)
+            if self.config.simulate:
+                enrichment = self._simulate_gemini_output(lead_dict)
+            else:
+                enrichment = self._call_gemini_api(lead_dict)
 
-        # Merge, letting enrichment columns overwrite existing ones if present
-        for col in insights_df.columns:
-            df[col] = insights_df[col]
+            notes.append(self._format_enrichment(enrichment))
 
+        df["AI_Notes"] = notes
+        logger.info("AIEnrichmentAgent: added AI_Notes for %d leads.", len(df))
         return df
 
     # ------------------------------------------------------------------
-    # Core rule-based enrichment
+    # Internal helpers
     # ------------------------------------------------------------------
 
-    def _enrich_rule_based(self, row: pd.Series) -> Dict[str, Any]:
-        # Pull normalized-ish values
-        industry_raw = self._safe_str(row.get("Industry"))
-        country_raw = self._safe_str(row.get("Country"))
-        seniority_raw = self._safe_str(row.get("SeniorityLevel"))
-        company_size_raw = self._safe_str(row.get("CompanySize"))
-        priority_score = self._safe_int(row.get("PriorityScore"))
+    def _call_gemini_api(self, lead: Dict[str, Any]) -> Dict[str, Any]:
+        """
+        Placeholder for a real Gemini API call.
 
-        industry_lc = industry_raw.lower()
-        country_lc = country_raw.lower()
-        seniority_lc = seniority_raw.lower()
+        For the capstone and public repo we do NOT call external services.
+        Instead, we log and fall back to a deterministic simulated response.
 
-        industry_bucket = self._get_industry_bucket(industry_lc)
-        region_bucket = self._get_region_bucket(country_lc)
-        company_size_tier = self._get_company_size_tier(company_size_raw)
-        seniority_tier = self._get_seniority_tier(seniority_lc)
+        A real implementation could look roughly like:
 
-        # ------------------------------------------------------------------
-        # ICP Fit scoring heuristic
-        # ------------------------------------------------------------------
-        icp_score = 0.0
-        reasons: List[str] = []
+            import os
+            import google.generativeai as genai
 
-        # Industry weight
-        if industry_bucket == "core":
-            icp_score += 3
-            reasons.append("core industry (fintech / cyber / IT / SaaS)")
-        elif industry_bucket == "adjacent":
-            icp_score += 2
-            reasons.append("adjacent tech-related industry")
-        elif industry_bucket == "other":
-            icp_score += 1
-            reasons.append("non-core industry")
+            genai.configure(api_key=os.environ["GEMINI_API_KEY"])
+            model = genai.GenerativeModel(self.config.model)
 
-        # Region weight
-        if region_bucket == "hub":
-            icp_score += 3
-            reasons.append("in strategic hub region")
-        else:
-            icp_score += 1
-            reasons.append("non-hub region")
+            prompt = GEMINI_PROMPT_TEMPLATE.format(
+                lead_json=json.dumps(lead, indent=2)
+            )
+            resp = model.generate_content(prompt)
+            # then parse resp.text as JSON, etc.
 
-        # Seniority
-        if seniority_tier == "executive":
-            icp_score += 3
-            reasons.append("executive decision maker")
-        elif seniority_tier == "lead":
-            icp_score += 2
-            reasons.append("team or department lead")
-        elif seniority_tier == "ic":
-            icp_score += 1
-            reasons.append("individual contributor")
+        """
+        logger.info(
+            "AIEnrichmentAgent: Gemini API call disabled in this repo, "
+            "falling back to simulated output."
+        )
+        return self._simulate_gemini_output(lead)
 
-        # Company size
-        if company_size_tier == "enterprise":
-            icp_score += 2
-            reasons.append("enterprise size company")
-        elif company_size_tier == "mid":
-            icp_score += 1.5
-            reasons.append("mid market company")
-        elif company_size_tier == "smb":
-            icp_score += 1
-            reasons.append("SMB size company")
+    def _simulate_gemini_output(self, lead: Dict[str, Any]) -> Dict[str, Any]:
+        """
+        Deterministic "fake Gemini" output used for the capstone and tests.
 
-        # PriorityScore nudges
-        if priority_score is not None:
-            if priority_score >= 9:
-                icp_score += 2
-                reasons.append("internally marked as top priority")
-            elif priority_score >= 7:
-                icp_score += 1.5
-                reasons.append("internally marked as high priority")
-            elif priority_score <= 3:
-                icp_score -= 1
-                reasons.append("internally marked as low priority")
+        This keeps the pipeline fully runnable without depending on
+        external APIs or billing, while still demonstrating how an LLM
+        would structure its reasoning.
+        """
+        company = (
+            str(lead.get("CompanyName"))
+            or str(lead.get("Company"))
+            or "the company"
+        )
+        industry = str(lead.get("Industry") or "their industry")
+        role = str(lead.get("JobTitle") or "their team")
 
-        # Clamp
-        if icp_score < 0:
-            icp_score = 0.0
-        if icp_score > 10:
-            icp_score = 10.0
-
-        # Map to label
-        if icp_score >= 7.5:
-            icp_label = "high"
-        elif icp_score >= 4.5:
-            icp_label = "medium"
-        else:
-            icp_label = "low"
-
-        icp_reason = "; ".join(reasons) if reasons else "No strong signals detected"
-
-        # ------------------------------------------------------------------
-        # Risk flags
-        # ------------------------------------------------------------------
-        email_val = row.get("Email")
-        email_status = self._classify_email(email_val)
-
-        risk_flag: Optional[str] = None
-
-        if email_status in {"empty", "invalid"}:
-            risk_flag = "Missing or invalid email"
-
-        if industry_bucket == "other":
-            if risk_flag:
-                risk_flag += " + non core industry"
-            else:
-                risk_flag = "Non core industry"
-
-        if priority_score is not None and priority_score <= 3:
-            if risk_flag:
-                risk_flag += " + low internal priority"
-            else:
-                risk_flag = "Low internal priority score"
-
-        # ------------------------------------------------------------------
-        # Suggested primary channel
-        # ------------------------------------------------------------------
-        suggested_channel = self._suggest_channel(
-            seniority_tier=seniority_tier,
-            region_bucket=region_bucket,
-            email_status=email_status,
+        pain_points = [
+            "manual reporting and fragmented data",
+            "slow outbound cycles",
+        ]
+        maturity_signals = [
+            "signs of growth or recent hiring",
+        ]
+        value_drivers = [
+            "workflow automation",
+            "pipeline visibility",
+            "AI-assisted prioritization",
+        ]
+        risk_factors = [
+            "unclear decision-maker",
+        ]
+        narrative = (
+            f"{company} operates in {industry} and {role} likely deals with "
+            f"manual workflows and slow pipeline visibility. A message that "
+            f"focuses on automation and clearer GTM execution will resonate."
         )
 
-        # ------------------------------------------------------------------
-        # Persona text
-        # ------------------------------------------------------------------
-        title = self._safe_str(row.get("JobTitle"))
-        industry_for_persona = industry_raw
-        country_for_persona = country_raw
-
-        persona_parts: List[str] = []
-        if title:
-            persona_parts.append(title)
-        if industry_for_persona:
-            persona_parts.append(industry_for_persona)
-        if country_for_persona:
-            persona_parts.append(country_for_persona)
-
-        persona = " in ".join(persona_parts)
-        if not persona:
-            persona = "Prospect in target market"
-
         return {
-            "ICPFitLabel": icp_label,
-            "ICPFitReason": icp_reason,
-            "RiskFlag": risk_flag,
-            "SuggestedPrimaryChannel": suggested_channel,
-            "Persona": persona,
+            "pain_points": pain_points,
+            "maturity_signals": maturity_signals,
+            "value_drivers": value_drivers,
+            "risk_factors": risk_factors,
+            "narrative": narrative,
         }
 
-    # ------------------------------------------------------------------
-    # Helper methods. NA-safe
-    # ------------------------------------------------------------------
-
-    def _safe_str(self, value: Any) -> str:
-        """Convert value to safe stripped string, even if it is NA."""
-        if value is None:
+    @staticmethod
+    def _format_enrichment(enrichment: Dict[str, Any]) -> str:
+        """
+        Turn the structured enrichment dict into a compact string suitable
+        for a single `AI_Notes` column that downstream agents and humans
+        can both read.
+        """
+        if not enrichment:
             return ""
-        try:
-            if pd.isna(value):  # type: ignore[arg-type]
-                return ""
-        except TypeError:
-            # Non-scalar. ignore NA check
-            pass
-        return str(value).strip()
 
-    def _safe_int(self, value: Any) -> Optional[int]:
-        if value is None:
-            return None
-        try:
-            if pd.isna(value):  # type: ignore[arg-type]
-                return None
-        except TypeError:
-            pass
-        try:
-            return int(value)
-        except (TypeError, ValueError):
-            return None
+        sections: List[str] = []
 
-    # ------------------------------------------------------------------
-    # Bucketing helpers
-    # ------------------------------------------------------------------
+        narrative = enrichment.get("narrative")
+        if narrative:
+            sections.append(str(narrative))
 
-    def _get_industry_bucket(self, value: Any) -> str:
-        if value is None:
-            return "unknown"
-        try:
-            if pd.isna(value):  # type: ignore[arg-type]
-                return "unknown"
-        except TypeError:
-            pass
+        def _join(label: str, key: str) -> None:
+            values = enrichment.get(key) or []
+            if values:
+                sections.append(f"{label}: " + ", ".join(map(str, values)))
 
-        text = str(value).strip().lower()
-        if not text:
-            return "unknown"
+        _join("Pain points", "pain_points")
+        _join("Signals", "maturity_signals")
+        _join("Value drivers", "value_drivers")
+        _join("Risks", "risk_factors")
 
-        if text in CORE_INDUSTRIES:
-            return "core"
-        if any(k in text for k in ["cloud", "data", "software", "bpo", "outsourcing"]):
-            return "adjacent"
-        return "other"
-
-    def _get_region_bucket(self, value: Any) -> str:
-        if value is None:
-            return "unknown"
-        try:
-            if pd.isna(value):  # type: ignore[arg-type]
-                return "unknown"
-        except TypeError:
-            pass
-
-        text = str(value).strip().lower()
-        if not text:
-            return "unknown"
-
-        if text in STRATEGIC_REGIONS:
-            return "hub"
-        return "other"
-
-    def _get_company_size_tier(self, value: Any) -> str:
-        """
-        Very simple bucketing based on size-like text.
-        """
-        if value is None:
-            return "unknown"
-        try:
-            if pd.isna(value):  # type: ignore[arg-type]
-                return "unknown"
-        except TypeError:
-            pass
-
-        text = str(value).strip().lower()
-        if not text:
-            return "unknown"
-
-        # textual hints
-        if "enterprise" in text or "1001" in text or "1000+" in text or "500+" in text:
-            return "enterprise"
-        if "51-200" in text or "201-500" in text:
-            return "mid"
-        if "1-10" in text or "11-50" in text or "small" in text:
-            return "smb"
-
-        # numeric-ish ranges like "51-200", "200-500", "50-1000+"
-        for token in ["-", "+"]:
-            if token in text:
-                left = text.split(token)[0]
-                try:
-                    n = int(left)
-                    if n >= 500:
-                        return "enterprise"
-                    if n >= 51:
-                        return "mid"
-                    return "smb"
-                except ValueError:
-                    pass
-
-        return "unknown"
-
-    def _get_seniority_tier(self, value: Any) -> str:
-        if value is None:
-            return "unknown"
-        try:
-            if pd.isna(value):  # type: ignore[arg-type]
-                return "unknown"
-        except TypeError:
-            pass
-
-        text = str(value).strip().lower()
-        if not text:
-            return "unknown"
-
-        if any(k in text for k in ["vp", "cxo", "cto", "ciso", "chief", "founder", "coo", "ceo"]):
-            return "executive"
-        if any(k in text for k in ["head", "director", "lead", "manager"]):
-            return "lead"
-        return "ic"
-
-    # ------------------------------------------------------------------
-    # Email & channel helpers
-    # ------------------------------------------------------------------
-
-    def _classify_email(self, value: Any) -> str:
-        """
-        Return one of.
-          - 'valid'
-          - 'invalid'
-          - 'empty'
-        """
-        if value is None:
-            return "empty"
-        try:
-            if pd.isna(value):  # type: ignore[arg-type]
-                return "empty"
-        except TypeError:
-            pass
-
-        text = str(value).strip()
-        if not text:
-            return "empty"
-        if "@" not in text or " " in text:
-            return "invalid"
-        return "valid"
-
-    def _suggest_channel(
-        self,
-        seniority_tier: str,
-        region_bucket: str,
-        email_status: str,
-    ) -> str:
-        """
-        Very simple channel heuristic.
-        """
-        # If email is bad. go LinkedIn-first
-        if email_status in {"empty", "invalid"}:
-            if region_bucket == "hub":
-                return "linkedin-first"
-            return "linkedin-only"
-
-        # Email is valid
-        if seniority_tier == "executive":
-            if region_bucket == "hub":
-                return "email + linkedin"
-            return "email-first"
-        if seniority_tier == "lead":
-            return "email + linkedin"
-        return "email-first"
+        return " | ".join(sections)

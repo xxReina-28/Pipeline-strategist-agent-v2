@@ -25,8 +25,8 @@ class PlaybookWriterAgent:
         segments_df: per-segment summary from SegmentDesignerAgent
         """
         md: List[str] = []
-        md.append("# Outbound GTM Playbook\n")
-        md.append("Generated automatically by Pipeline Strategist Agent.\n\n")
+        md.append("# Pipeline Strategist Agent (PSA)\n")
+        md.append("## Outbound GTM Playbook\n\n")
 
         # 1. Segment summary
         md.append("## Segment summary\n\n")
