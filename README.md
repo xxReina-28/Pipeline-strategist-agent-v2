@@ -137,11 +137,12 @@ If no real API key is configured, PSA automatically uses a simulated Gemini resp
 
 Each run generates four artifacts:
 
-|File	| Description |
-| cleaned_scored_leads.csv	| Final cleaned, enriched, and scored lead dataset
-| lead_segments.csv	| Segment-level summary table
-| outbound_playbook.md	| Full Markdown GTM playbook
-| quality_report.md	| Data validation & pipeline health report
+|              File	        | Description |
+| ------------------------- |:-------------:| 
+| cleaned_scored_leads.csv	| Final cleaned, enriched, and scored lead dataset |
+| lead_segments.csv	        | Segment-level summary table                      |
+| outbound_playbook.md    	| Full Markdown GTM playbook                       |
+| quality_report.md        	| Data validation & pipeline health report         |
 
 ## Test Datasets
 
