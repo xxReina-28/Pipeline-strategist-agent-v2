@@ -140,9 +140,9 @@ Each run generates four artifacts:
 |              File	        | Description |
 | ------------------------- |:-------------:| 
 | cleaned_scored_leads.csv	| Final cleaned, enriched, and scored lead dataset |
-| lead_segments.csv	        | Segment-level summary table                      |
-| outbound_playbook.md    	| Full Markdown GTM playbook                       |
-| quality_report.md        	| Data validation & pipeline health report         |
+| lead_segments.csv	        | Segment-level summary table    |
+| outbound_playbook.md    	| Full Markdown GTM playbook              |
+| quality_report.md        	| Data validation & pipeline health report   |
 
 ## Test Datasets
 
@@ -180,3 +180,5 @@ PSA demonstrates how modern multi-agent systems can automate real-world GTM data
 It blends AI agents and traditional data engineering in a reproducible, production-ready design.
 
 
+## License  
+MIT License.
