@@ -9,8 +9,7 @@ PSA is engineered for reproducibility, clarity, and enterprise-grade extensibili
 
 ## Architecture Overview
 
-![Pipeline Strategist Agent Architecture](assets/psa_architecture.jpg)
-
+![Pipeline Strategist Agent Architecture](pipeline_agent/assets/psa_architecture.jpg)
 PSA uses a **sequential multi-agent architecture**. Each agent transforms the input, adds structured context, and passes it downstream.
 
 
